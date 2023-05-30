@@ -1,0 +1,3 @@
+module Weapon {
+	requires Common;
+}

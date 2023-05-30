@@ -1,0 +1,3 @@
+module Map {
+	requires Common;
+}
