@@ -1,4 +1,4 @@
-package dk.ladegaardmoeller;
+package dk.ladegaardmoeller.weapon;
 
 public class Main {
 	public static void main(String[] args) {
