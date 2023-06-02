@@ -3,11 +3,11 @@ package dk.ladegaardmoeller.map;
 import dk.ladegaardmoeller.common.data.Entity;
 import dk.ladegaardmoeller.common.data.GameData;
 import dk.ladegaardmoeller.common.data.Vector2;
-import dk.ladegaardmoeller.common.spi.Processor;
+import dk.ladegaardmoeller.common.spi.PostProcessor;
 
-public class MapProcessor implements Processor {
+public class MapPostProcessor implements PostProcessor {
 	@Override
-	public void process(GameData gameData) {
+	public void postProcess(GameData gameData) {
 		for (Entity entity : gameData.getEntities()) {
 			wrapEntity(entity, gameData.getMapSize());
 		}

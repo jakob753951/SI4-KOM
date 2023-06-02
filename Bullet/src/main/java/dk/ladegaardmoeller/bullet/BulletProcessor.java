@@ -13,6 +13,9 @@ public class BulletProcessor implements Processor {
 	}
 	
 	private void processPosition(Bullet bullet) {
-		bullet.setPosition(new Vector2(bullet.getPosition().x() + bullet.getVelocity().x(), bullet.getPosition().y() + bullet.getVelocity().y()));
+		bullet.setPosition(new Vector2(
+			bullet.getPosition().x() + bullet.getVelocity().x(),
+			bullet.getPosition().y() + bullet.getVelocity().y()
+		));
 	}
 }

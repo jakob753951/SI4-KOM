@@ -13,6 +13,7 @@ public class SPILocator {
 			instances.add(instance);
 		}
 		
+		System.out.println("Found " + instances.size() + " implementations of type: " + service.getName());
 		return instances;
 	}
 }

@@ -8,7 +8,7 @@ import dk.ladegaardmoeller.common.spi.PostProcessor;
 import java.util.List;
 import java.util.Set;
 
-public class Collision implements PostProcessor {
+public class CollisionPostProcessor implements PostProcessor {
 	@Override
 	public void postProcess(GameData gameData) {
 		Set<Entity> entitySet = gameData.getEntities();

@@ -75,7 +75,7 @@ public class EnemyProcessor implements Processor {
 			return;
 		}
 		
-		float thrustSpeed = 0.5f;
+		float thrustSpeed = 0.1f;
 		enemy.setVelocity(new Vector2(
 			enemy.getVelocity().x() + ((float) Math.cos(enemy.getRotation())) * thrustSpeed,
 			enemy.getVelocity().y() + ((float) Math.sin(enemy.getRotation())) * thrustSpeed
@@ -96,6 +96,13 @@ public class EnemyProcessor implements Processor {
 		}
 		
 		List<Spawner> spawners = SPILocator.locateAll(Spawner.class);
-		spawners.forEach(spawner -> spawner.spawn(gameData, enemy.getPosition(), enemy.getRotation()));
+		
+		float barrelLength = 11;
+		Vector2 spawnPosition = new Vector2(
+			(float) (enemy.getPosition().x() + Math.cos(enemy.getRotation()) * barrelLength),
+			(float) (enemy.getPosition().y() + Math.sin(enemy.getRotation()) * barrelLength)
+		);
+		
+		spawners.forEach(spawner -> spawner.spawn(gameData, spawnPosition, enemy.getRotation()));
 	}
 }

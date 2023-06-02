@@ -1,5 +1,7 @@
 package dk.ladegaardmoeller.player;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import dk.ladegaardmoeller.common.data.GameData;
 import dk.ladegaardmoeller.common.data.Vector2;
 import dk.ladegaardmoeller.common.data.input.Inputs;
@@ -39,14 +41,14 @@ public class PlayerProcessor implements Processor {
 	
 	private Inputs getKeyboardInputs() {
 		Inputs inputs = new Inputs();
-		inputs.shoot = Gdx.input.isKeyJustPressed(Keys.Space);
-		inputs.forwards = Gdx.input.isKeyPressed(Keys.W);
+		inputs.shoot = Gdx.input.isKeyJustPressed(Input.Keys.SPACE);
+		inputs.forwards = Gdx.input.isKeyPressed(Input.Keys.W);
 		
-		if (Gdx.input.isKeyPressed(Keys.A) == Gdx.input.isKeyPressed(Keys.D)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.A) == Gdx.input.isKeyPressed(Input.Keys.D)) {
 			inputs.turning = null;
-		} else if (Gdx.input.isKeyPressed(Keys.D)) {
+		} else if (Gdx.input.isKeyPressed(Input.Keys.D)) {
 			inputs.turning = Turning.Right;
-		} else if (Gdx.input.isKeyPressed(Keys.A)) {
+		} else if (Gdx.input.isKeyPressed(Input.Keys.A)) {
 			inputs.turning = Turning.Left;
 		}
 		
@@ -72,7 +74,7 @@ public class PlayerProcessor implements Processor {
 			return;
 		}
 		
-		float thrustSpeed = 0.5f;
+		float thrustSpeed = 0.1f;
 		player.setVelocity(new Vector2(
 			player.getVelocity().x() + ((float) Math.cos(player.getRotation())) * thrustSpeed,
 			player.getVelocity().y() + ((float) Math.sin(player.getRotation())) * thrustSpeed
@@ -93,6 +95,13 @@ public class PlayerProcessor implements Processor {
 		}
 		
 		List<Spawner> spawners = SPILocator.locateAll(Spawner.class);
-		spawners.forEach(spawner -> spawner.spawn(gameData, player.getPosition(), player.getRotation()));
+		
+		float barrelLength = 11;
+		Vector2 spawnPosition = new Vector2(
+			(float) (player.getPosition().x() + Math.cos(player.getRotation()) * barrelLength),
+			(float) (player.getPosition().y() + Math.sin(player.getRotation()) * barrelLength)
+		);
+		
+		spawners.forEach(spawner -> spawner.spawn(gameData, spawnPosition, player.getRotation()));
 	}
 }

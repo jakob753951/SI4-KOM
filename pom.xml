@@ -29,11 +29,6 @@
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
-				<groupId>dk.sdu.mmmi.cbse</groupId>
-				<artifactId>shadedlibgdx</artifactId>
-				<version>1.0.1-SNAPSHOT</version>
-			</dependency>
-			<dependency>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>sonar-maven-plugin</artifactId>
 				<version>3.0.1</version>
@@ -100,7 +95,7 @@
 						<argument>-Djava.library.path=libs</argument>
 						<argument>--module-path=mods-mvn</argument>
 						<argument>--class-path=libs/*</argument>
-						<argument>--module=Core/dk.sdu.mmmi.cbse.main.Main</argument>
+						<argument>--module=Core/dk.ladegaardmoeller.core.Main</argument>
 					</arguments>
 				</configuration>
 			</plugin>

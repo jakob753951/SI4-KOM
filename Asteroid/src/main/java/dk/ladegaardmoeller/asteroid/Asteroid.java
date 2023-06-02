@@ -5,11 +5,14 @@ import dk.ladegaardmoeller.common.data.GameData;
 import dk.ladegaardmoeller.common.data.PolarPoint;
 import dk.ladegaardmoeller.common.data.Vector2;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Asteroid extends Entity {
 	private final Vector2 velocity = new Vector2(0, 0);
 	private final float angularVelocity;
+	Random rng = new Random();
 	
 	public Asteroid(Vector2 position, float rotation, float radius, float angularVelocity) {
 		super(position, rotation, radius);
@@ -26,7 +29,16 @@ public class Asteroid extends Entity {
 	
 	@Override
 	public List<PolarPoint> getPolarPoints() {
-		return null;
+		List<PolarPoint> points = new ArrayList<>();
+		
+		int pointCount = 8;
+		for (int i = 0; i < pointCount; i++) {
+			points.add(new PolarPoint(
+				(float) (i*((Math.PI*2)/8)),
+				rng.nextFloat(getRadius()-2, getRadius()+2)
+			));
+		}
+		return points;
 	}
 	
 	@Override

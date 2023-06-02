@@ -36,7 +36,9 @@ public class GameEngine extends ApplicationAdapter {
 	@Override
 	public void render() {
 		Gdx.gl.glClearColor(0, 0, 0, 0);
+		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		shapeRenderer = new ShapeRenderer();
 		
 		List<Processor> processors = SPILocator.locateAll(Processor.class);
 		for (Processor processor : processors) {
@@ -46,10 +48,8 @@ public class GameEngine extends ApplicationAdapter {
 		this.camera.update();
 		
 		for (Entity entity : gameData.getEntities()) {
-			drawPoints(entity.getPolarPoints());
+			draw(entity);
 		}
-		
-		shapeRenderer = new ShapeRenderer();
 		
 		List<PostProcessor> postProcessors = SPILocator.locateAll(PostProcessor.class);
 		for (PostProcessor postProcessor : postProcessors) {
@@ -57,16 +57,28 @@ public class GameEngine extends ApplicationAdapter {
 		}
 	}
 	
-	private void drawPoints(List<PolarPoint> polarPoints) {
-		float[] floatPoints = new float[polarPoints.size() * 2];
+	private void draw(Entity entity) {
+		List<PolarPoint> polarPoints = entity.getPolarPoints();
+		float[] floatPoints = new float[polarPoints.size() * 2 + 2];
 		for (int i = 0; i < polarPoints.size(); i++) {
-			PolarPoint polarPoint = polarPoints.get(i);
-			floatPoints[i * 2] = polarPoint.getX();
-			floatPoints[i * 2 + 1] = polarPoint.getY();
+			PolarPoint polarPoint = new PolarPoint(
+				polarPoints.get(i).rotation() + entity.getRotation(),
+				polarPoints.get(i).magnitude()
+			);
+			floatPoints[i * 2] = polarPoint.getX() + entity.getPosition().x();
+			floatPoints[i * 2 + 1] = polarPoint.getY() + entity.getPosition().y();
 		}
 		
-		shapeRenderer.begin();
-		shapeRenderer.polygon(floatPoints);
+		
+		PolarPoint polarPoint = new PolarPoint(
+			polarPoints.get(0).rotation() + entity.getRotation(),
+			polarPoints.get(0).magnitude()
+		);
+		floatPoints[polarPoints.size() * 2] = polarPoint.getX() + entity.getPosition().x();
+		floatPoints[polarPoints.size() * 2 + 1] = polarPoint.getY() + entity.getPosition().y();
+		
+		shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+		shapeRenderer.polyline(floatPoints);
 		shapeRenderer.end();
 	}
 }

@@ -11,10 +11,11 @@ import java.util.List;
 public class Bullet extends Entity {
 	private static final float bulletSpeed = 2;
 	private static final float bulletRadius = 5;
-	private final Vector2 velocity = new Vector2((float) Math.cos(bulletSpeed), (float) Math.sin(bulletSpeed));
+	private final Vector2 velocity;
 	
 	public Bullet(Vector2 position, float rotation) {
 		super(position, rotation, bulletRadius);
+		velocity = new Vector2((float) Math.cos(rotation) * bulletSpeed, (float) Math.sin(rotation) * bulletSpeed);
 	}
 	
 	public Vector2 getVelocity() {
